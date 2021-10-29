@@ -18,7 +18,8 @@ def get_status():  # put application's code here
                   f" priority: {item['priority']}  </br> "
     return status
 
-
+# https://docs-python.ru/packages/veb-frejmvork-flask-python/registratsija-marshrutov-url-adresov-flask/
+# https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
 @app.route('/')
 def hello_world():  # put application's code here
     return 'Hello World!'
@@ -36,7 +37,9 @@ def getToDO(id):
 @app.route('/set', methods=['POST'])
 def foo():
     data = request.json
-    return jsonify(data)
-
+    toDOlist.append(data)
+    print(data)
+    # return jsonify(data)
+    return f"## Add {data}", 200, {'Content-Type': 'text/markdown'}
 if __name__ == '__main__':
     app.run()
