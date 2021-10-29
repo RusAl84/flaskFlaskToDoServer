@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+
 toDOlist = []
 toDoItem = {}
 toDoItem['name'] = "Flask"
@@ -28,8 +31,9 @@ def hello_world():  # put application's code here
 def getToDO(id):
     if 0 <= int(id) < len(toDOlist):
         item=toDOlist[int(id)]
-        return f"name: {item['name']}   &nbsp; &nbsp; " \
-                  f" priority: {item['priority']}  </br> "
+        # return f"name: {item['name']}   &nbsp; &nbsp; " \
+        #           f" priority: {item['priority']}  </br> "
+        return jsonify(item)
     else:
         return jsonify(toDOlist)
         return "Not Found"
@@ -37,9 +41,11 @@ def getToDO(id):
 @app.route('/set', methods=['POST'])
 def foo():
     data = request.json
-    toDOlist.append(data)
     print(data)
+    toDOlist.append(data)
+
     # return jsonify(data)
     return f"## Add {data}", 200, {'Content-Type': 'text/markdown'}
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
+app.run(host='0.0.0.0')
